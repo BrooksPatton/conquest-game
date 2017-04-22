@@ -6,11 +6,20 @@ function add(obj){
     return user.insert(obj)
 }
 
-function getAll(){
-    return user.find({})
+function getOne(_id){
+    return user.findOne({_id})
+}
+
+function create(name) {
+    const userObj = {
+        name
+    }
+
+    return user.insert(userObj)
 }
 
 module.exports = {
     add,
-    getAll
+    getOne,
+    create
 }

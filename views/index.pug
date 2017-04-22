@@ -1,5 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1 Welcome to Conquest
+
+  p If you have fought here before, enter in your code, otherwise press the "To Battle" button below
+
+  form(action='/game', method='get')
+    .button
+      button To Battle!

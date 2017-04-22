@@ -2,14 +2,15 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
+var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 var sassMiddleware = require('node-sass-middleware');
-
 var index = require('./routes/index');
 var users = require('./routes/users');
+const gameRouter = require('./routes/game')
 
 var app = express();
+const cookieKey = process.env.COOKIE_KEY || 'keyboard cat'
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,7 +21,11 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieSession({
+  name: 'session',
+  keys: [cookieKey],
+  expires: new Date(Date.now() + 900000000)
+}));
 app.use(sassMiddleware({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
@@ -31,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/game', gameRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
