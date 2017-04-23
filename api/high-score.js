@@ -14,6 +14,8 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   req.body.score = +req.body.score
 
+  console.log(req.body)
+
   db.add(req.body)
   .then(data => res.json(data))
   .catch(err => next(err))
