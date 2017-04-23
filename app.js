@@ -8,6 +8,7 @@ var sassMiddleware = require('node-sass-middleware');
 var index = require('./routes/index');
 var users = require('./routes/users');
 const gameRouter = require('./routes/game')
+const highScoreApi = require('./api/high-score')
 
 var app = express();
 const cookieKey = process.env.COOKIE_KEY || 'keyboard cat'
@@ -37,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/game', gameRouter)
+app.use('/api/v1/high-score', highScoreApi)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
